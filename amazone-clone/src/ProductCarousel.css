@@ -1,0 +1,35 @@
+.product-carousel{
+	margin: 0 10px;
+	background-color: white;
+	padding: 20px;
+}
+
+.product-carouselLineOne{
+	display: flex;
+	align-items: center;
+	padding: 20px 0;
+}
+
+.product-carouselTitle{
+	font-size: 20px;
+	font-weight: 800;
+	margin-right: 20px;
+}
+
+.product-carouselLineOne a{
+	text-decoration: none;
+	font-size: 13px;
+}
+.react-multi-carousel-item{
+	margin-right: 10px;
+}
+.react-multi-carousel-track{
+	align-items: center;
+}
+
+.product-carouselList img{
+	width: auto;
+	height: auto;
+	max-width: 270px;
+	max-height: 200px;
+}

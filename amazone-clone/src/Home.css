@@ -1,0 +1,54 @@
+main{
+	background-color: #eaeded;
+}
+.home{
+	max-width: 1500px;
+	margin: 0 auto;
+}
+.home__bannerImage{
+	width:100%;
+	z-index: -1;
+	mask-image: linear-gradient(to bottom,rgba(0,0,0,1),rgba(0,0,0,0));
+}
+.home__container{
+	display: flex;
+	padding: 0 20px;
+}
+
+.card-flow-row-break{
+	height: 20px;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+.marginTopMinus-100{
+	margin-top: -300px;
+}
+.carousel.carousel-slider .control-arrow{
+	height: 50%;
+	margin:2px;
+ }
+ 
+ .carousel .control-prev.control-arrow:before,
+ .carousel .control-next.control-arrow:before{
+	 border-width:15px  !important
+ }
+ .carousel.carousel-slider .control-arrow:hover{
+	 background: none !important;
+ }
+ 
+ .carousel.carousel-slider .control-arrow:focus
+ {
+	 border: 2px solid #fff;
+ }
+ .carousel .control-arrow:before, .carousel.carousel-slider .control-arrow:before{
+	 border-width: 25px;
+ }
+
+ .top-seller{
+	 padding: 0 20px;
+ }
+ .best-seller{
+	 padding: 0 20px;
+ }
+
