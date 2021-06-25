@@ -61,7 +61,7 @@ const Wrap = styled.div`
     transition-duration: 300ms;
 
     &:hover {
-      border: 4px solid rgb(249, 249, 249, 0.8);
+      border: 4px solid rgba(249, 249, 249, 0.8);
     }
   }
 `;
