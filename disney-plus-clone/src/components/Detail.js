@@ -71,7 +71,7 @@ const Background = styled.div`
 `;
 
 const ImageTitle = styled.div`
-  height: 30vh;
+  // height: 30vh;
   width: 35vw;
   min-height: 170px;
   min-width: 200px;
