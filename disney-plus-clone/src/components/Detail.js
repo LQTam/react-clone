@@ -1,47 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useParams, useHistory } from "react-router-dom";
+import db from "../firebase";
 
 function Detail() {
+  const history = useHistory();
+  const { id } = useParams();
+  const [movie, setMovie] = useState({});
+  useEffect(() => {
+    db.collection("movies")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setMovie(doc.data());
+        } else {
+          history.push("/");
+        }
+      });
+  }, []);
   return (
     <Container>
-      <Background>
-        <img
-          alt="background image"
-          src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4F39B7E16726ECF419DD7C49E011DD95099AA20A962B0B10AA1881A70661CE45/scale?width=1440&aspectRatio=1.78&format=jpeg"
-        />
-      </Background>
-      <ImageTitle>
-        <img
-          alt="image title"
-          src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1440&aspectRatio=1.78"
-        />
-      </ImageTitle>
-      <Controls>
-        <PlayButton>
-          <img alt="play image" src="/images/play-icon-black.png" />
-          <span>Play</span>
-        </PlayButton>
-        <TrailerButton>
-          <img alt="trailer image" src="/images/play-icon-white.png" />
-          <span>Trailer</span>
-        </TrailerButton>
-        <AddButton>
-          <span>+</span>
-        </AddButton>
-        <GroupWatchButton>
-          <img alt="group icon" src="images/group-icon.png" />
-        </GroupWatchButton>
-      </Controls>
-      <SubTitle>2018 · 7m · Family, Fantasy, Kids, Animation</SubTitle>
-      <Description>
-        Bao is a 2018 American computer-animated short film written and directed
-        by Domee Shi and produced by Pixar Animation Studios. It was released
-        with Incredibles 2 on June 15, 2018. The film is about an aging and
-        lonely Chinese-Canadian mother, suffering from empty nest syndrome, who
-        receives an unexpected second chance at motherhood when she makes a
-        steamed bun (baozi) that comes to life. The film won the Oscar for the
-        Best Animated Short Film at the 91st Academy Awards
-      </Description>
+      {movie && (
+        <>
+          <Background>
+            <img alt={movie.title} src={movie.backgroundImg} />
+          </Background>
+          <ImageTitle>
+            <img alt={movie.title} src={movie.titleImg} />
+          </ImageTitle>
+          <Controls>
+            <PlayButton>
+              <img alt="play image" src="/images/play-icon-black.png" />
+              <span>Play</span>
+            </PlayButton>
+            <TrailerButton>
+              <img alt="trailer image" src="/images/play-icon-white.png" />
+              <span>Trailer</span>
+            </TrailerButton>
+            <AddButton>
+              <span>+</span>
+            </AddButton>
+            <GroupWatchButton>
+              <img alt="group icon" src="/images/group-icon.png" />
+            </GroupWatchButton>
+          </Controls>
+          <SubTitle>{movie.subTitle}</SubTitle>
+          <Description>{movie.description}</Description>
+        </>
+      )}
     </Container>
   );
 }
