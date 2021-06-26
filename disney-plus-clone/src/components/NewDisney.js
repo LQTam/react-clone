@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import {  selectRecommends } from "../features/movie/movieSlice";
+import {  selectNewDisneys } from "../features/movie/movieSlice";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { DETAIL } from "../app/routes";
 
-function Movies() {
-  const movies = useSelector(selectRecommends);
+function NewDisney() {
+  const movies = useSelector(selectNewDisneys);
   return (
     <Container>
-      <h4>Recommended for You</h4>
+      <h4>New to Disney+</h4>
       <Content>
         {movies?.map((movie) => (
           <Wrap key={movie.id}>
@@ -23,7 +23,7 @@ function Movies() {
   );
 }
 
-export default Movies;
+export default NewDisney;
 
 const Container = styled.div``;
 

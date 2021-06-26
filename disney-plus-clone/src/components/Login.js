@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { HOME } from "../app/routes";
 
 function Login() {
   return (
     <Container>
       <CTA>
         <CTALogoOne src="images/cta-logo-one.svg" />
-        <SignUp href="/">GET ALL THERE</SignUp>
+        <SignUp href={HOME}>GET ALL THERE</SignUp>
         <Description>
           Stream Marvel Studios' Black Widow with Premier Access the same day
           it’s in theaters.

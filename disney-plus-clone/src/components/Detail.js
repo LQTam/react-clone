@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams, useHistory } from "react-router-dom";
 import db from "../firebase";
-
+import { HOME } from "../app/routes";
 function Detail() {
   const history = useHistory();
   const { id } = useParams();
@@ -15,10 +15,10 @@ function Detail() {
         if (doc.exists) {
           setMovie(doc.data());
         } else {
-          history.push("/");
+          history.push(HOME);
         }
       });
-  }, []);
+  }, [id]);
   return (
     <Container>
       {movie && (
@@ -31,11 +31,11 @@ function Detail() {
           </ImageTitle>
           <Controls>
             <PlayButton>
-              <img alt="play image" src="/images/play-icon-black.png" />
+              <img alt="play" src="/images/play-icon-black.png" />
               <span>Play</span>
             </PlayButton>
             <TrailerButton>
-              <img alt="trailer image" src="/images/play-icon-white.png" />
+              <img alt="trailer" src="/images/play-icon-white.png" />
               <span>Trailer</span>
             </TrailerButton>
             <AddButton>
@@ -78,7 +78,7 @@ const Background = styled.div`
 `;
 
 const ImageTitle = styled.div`
-  // height: 30vh;
+  height: 30vh;
   width: 35vw;
   min-height: 170px;
   min-width: 200px;
@@ -133,6 +133,9 @@ const AddButton = styled.button`
   background-color: rgba(0, 0, 0, 0.6);
   cursor: pointer;
 
+  &:hover {
+    background: rgba(198, 198, 198, 0.3);
+  }
   span {
     font-size: 30px;
     color: white;

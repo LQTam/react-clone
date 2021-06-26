@@ -6,18 +6,61 @@ import Viewers from "./Viewers";
 import db from "../firebase";
 import { useDispatch } from "react-redux";
 import { setMovies } from "../features/movie/movieSlice";
+import NewDisney from "./NewDisney";
+import Originals from "./Originals";
+import Trending from "./Trending";
 
 function Home() {
   const dispatch = useDispatch();
+  let recommends = [];
+  let newDisneys = [];
+  let originals = [];
+  let trendings = [];
   useEffect(() => {
     db.collection("movies").onSnapshot((snapshot) => {
-      let tempMovies = snapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data(),
-        };
+      snapshot.docs.map((doc) => {
+        switch (doc.data().type) {
+          case "recommend":
+            recommends = [
+              ...recommends,
+              {
+                id: doc.id,
+                ...doc.data(),
+              },
+            ];
+            break;
+          case "new":
+            newDisneys = [
+              ...newDisneys,
+              {
+                id: doc.id,
+                ...doc.data(),
+              },
+            ];
+            break;
+          case "original":
+            originals = [
+              ...originals,
+              {
+                id: doc.id,
+                ...doc.data(),
+              },
+            ];
+            break;
+          case "trending":
+            trendings = [
+              ...trendings,
+              {
+                id: doc.id,
+                ...doc.data(),
+              },
+            ];
+            break;
+          default:
+            break;
+        }
       });
-      dispatch(setMovies(tempMovies));
+      dispatch(setMovies({ recommends, newDisneys, originals, trendings }));
     });
   }, []);
   return (
@@ -25,6 +68,9 @@ function Home() {
       <ImgSlider />
       <Viewers />
       <Movies />
+      <NewDisney />
+      <Originals />
+      <Trending />
     </Container>
   );
 }
