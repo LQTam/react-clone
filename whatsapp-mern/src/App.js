@@ -4,12 +4,21 @@ import Chat from "./components/Chat";
 import Sidebar from "./components/Sidebar";
 import Pusher from "pusher-js";
 import axios from "./axios";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Login from "./components/Login";
+import { useStateValue } from "./StateProvider";
 
 function App() {
-  const [messages, setMessages] = useState([]);
+  const [{ user }, dispatch] = useStateValue();
+  // const [messages, setMessages] = useState([]);
+  const [rooms, setRooms] = useState([]);
   useEffect(() => {
-    axios.get("/messages/sync").then((response) => {
-      setMessages(response.data);
+    // axios.get("/messages/sync").then((response) => {
+    //   setMessages(response.data);
+    // });
+
+    axios.get("/rooms/sync").then(({ data }) => {
+      setRooms(data);
     });
   }, []);
 
@@ -18,24 +27,43 @@ function App() {
       cluster: "ap1",
     });
 
-    var channel = pusher.subscribe("messages");
-    channel.bind("inserted", function (newMessage) {
-      setMessages([...messages, newMessage]);
+    // var messageChannel = pusher.subscribe("messages");
+    // messageChannel.bind("inserted", function (newMessage) {
+    //   setMessages([...messages, newMessage]);
+    // });
+    var roomChannel = pusher.subscribe("rooms");
+    roomChannel.bind("inserted", function (newRoom) {
+      setRooms([...rooms, newRoom]);
     });
 
     return () => {
-      channel.unbind_all();
-      channel.unsubscribe();
+      // messageChannel.unbind_all();
+      // messageChannel.unsubscribe();
+      roomChannel.unbind_all();
+      roomChannel.unsubscribe();
     };
-  }, [messages]);
+  }, [rooms]);
   return (
     <div className="app">
-      <div className="app__body">
-        {/* SIDE BAR */}
-        <Sidebar />
-        {/* CHAT COMPONENT */}
-        <Chat messages={messages} />
-      </div>
+      {!user ? (
+        <Login />
+      ) : (
+        <div className="app__body">
+          <Router>
+            <Sidebar rooms={rooms} />
+            <Switch>
+              {/* SIDE BAR */}
+              <Route path="/rooms/:roomId">
+                {/* CHAT COMPONENT */}
+                <Chat />
+              </Route>
+              <Route path="/">
+                <h1>Select a room</h1>
+              </Route>
+            </Switch>
+          </Router>
+        </div>
+      )}
     </div>
   );
 }

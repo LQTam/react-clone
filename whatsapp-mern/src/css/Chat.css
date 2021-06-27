@@ -29,6 +29,7 @@
   background-image: url("https://images.unsplash.com/photo-1538645731800-4640c639bba7?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnJvd24lMjB3YWxsfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80");
   background-repeat: no-repeat;
   background-position: center;
+  background-size: cover;
   padding: 30px;
   overflow: scroll;
 }

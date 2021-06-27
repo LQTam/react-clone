@@ -6,17 +6,28 @@ import ChatIcon from "@material-ui/icons/Chat";
 import { SearchOutlined } from "@material-ui/icons";
 import { IconButton, Avatar } from "@material-ui/core";
 import SidebarChat from "./SidebarChat";
+import axios from "../axios";
+import { useStateValue } from "../StateProvider";
 
-function Sidebar() {
+function Sidebar({ rooms }) {
+  const [{ user }, dispatch] = useStateValue();
+  const createChat = async () => {
+    let roomName = prompt("Please enter name for chat room.");
+
+    while (roomName === "") {
+      roomName = prompt("Please enter name for chat room.");
+    }
+    await axios.post("/rooms/new", { name: roomName });
+  };
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar src="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B" />
+        <Avatar src={user?.photoURL} />
         <div className="sidebar__headerRight">
           <IconButton>
             <DonutLargeIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={createChat}>
             <ChatIcon />
           </IconButton>
           <IconButton>
@@ -30,11 +41,10 @@ function Sidebar() {
           <input placeholder="Search or start new chat" type="text" />
         </div>
       </div>
-
       <div className="sidebar__chats">
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
+        {rooms?.map((roomData, key) => (
+          <SidebarChat key={key} {...roomData} />
+        ))}
       </div>
     </div>
   );

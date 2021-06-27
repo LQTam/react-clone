@@ -6,19 +6,53 @@ import {
   SearchOutlined,
 } from "@material-ui/icons";
 import MoreVert from "@material-ui/icons/MoreVert";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import "../css/Chat.css";
 import axios from "../axios";
+import { useStateValue } from "../StateProvider";
+import Pusher from "pusher-js";
 
-function Chat({ messages }) {
+function Chat() {
+  const [{ user }, dispatch] = useStateValue();
   const [message, setMessage] = useState("");
+  const { roomId } = useParams();
+  const [roomName, setRoomName] = useState("");
+  const [roomMessages, setRoomMessages] = useState([]);
+  useEffect(() => {
+    if (roomId) {
+      axios.get(`/rooms/${roomId}`).then(({ data }) => {
+        setRoomName(data.name);
+        setRoomMessages(data.messages);
+      });
+    }
+  }, [roomId]);
+
+  useEffect(() => {
+    var pusher = new Pusher("56d23b108dfd4f5ecf4c", {
+      cluster: "ap1",
+    });
+
+    var roomChannel = pusher.subscribe("rooms");
+    roomChannel.bind("roomMessageUpdate", function (newMessage) {
+      console.log(newMessage);
+      setRoomMessages([...roomMessages, newMessage]);
+    });
+
+    return () => {
+      roomChannel.unbind_all();
+      roomChannel.unsubscribe();
+    };
+  }, [roomMessages]);
+
   const sendMessage = async (e) => {
     e.preventDefault();
-    await axios.post("/messages/new", {
-      name: "DemoApp",
+    await axios.post(`/rooms/${roomId}/messages/new`, {
+      name: user.displayName,
       message: message,
-      timestamp: "Just now!",
+      timestamp: new Date().toLocaleString(),
       received: false,
+      uid: user.uid,
     });
 
     setMessage("");
@@ -28,8 +62,8 @@ function Chat({ messages }) {
       <div className="chat__header">
         <Avatar />
         <div className="chat__headerInfo">
-          <h3>Room name</h3>
-          <p>Last seen at ...</p>
+          <h3>{roomName}</h3>
+          <p>last seen {roomMessages[roomMessages.length - 1]?.timestamp}</p>
         </div>
 
         <div className="chat__headerRight">
@@ -48,9 +82,12 @@ function Chat({ messages }) {
       </div>
 
       <div className="chat__body">
-        {messages?.map((message) => (
+        {roomMessages?.map((message, key) => (
           <p
-            className={`chat__message ${message.received && "chat__receiver"}`}
+            key={key}
+            className={`chat__message ${
+              message.uid === user.uid && "chat__receiver"
+            }`}
           >
             <span className="chat__name">{message.name}</span>
             {message.message}

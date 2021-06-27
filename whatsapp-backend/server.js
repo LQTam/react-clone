@@ -60,9 +60,16 @@ db.once("open", () => {
   });
 
   roomChangeStream.on("change", (change) => {
-    if (change.operationType === "inserted") {
-      const { name } = change.fullDocument;
-      pusher.trigger("rooms", "inserted", { name: name });
+    if (change.operationType === "insert") {
+      pusher.trigger("rooms", "inserted", change.fullDocument);
+    } else if (change.operationType === "update") {
+      let { updatedFields } = change.updateDescription;
+      let keys = Object.keys(updatedFields);
+      let lastKey = keys[keys.length - 1];
+      let newMessage = Array.isArray(updatedFields[lastKey])
+        ? updatedFields[lastKey][0]
+        : updatedFields[lastKey];
+      pusher.trigger("rooms", "roomMessageUpdate", newMessage);
     } else {
       console.log("Error triggering Pusher");
     }
@@ -103,5 +110,40 @@ app.get("/rooms/sync", (req, res) => {
     }
   });
 });
+app.post("/rooms/new", (req, res) => {
+  const dbRoom = req.body;
+  Rooms.create(dbRoom, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+app.get("/rooms/:roomId", (req, res) => {
+  let { roomId } = req.params;
+  Rooms.findOne({ _id: roomId }, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
+app.post("/rooms/:roomId/messages/new", (req, res) => {
+  let { roomId } = req.params;
+  let dbMessage = req.body;
+  Rooms.findOne({ _id: roomId }, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      data.messages.push(dbMessage);
+      data.save();
+      res.status(200).send(data);
+    }
+  });
+});
+
 // listen
 app.listen(port, () => console.log(`Listening on localhost:${port}`));
