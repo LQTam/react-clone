@@ -1,10 +1,17 @@
 import React from "react";
 import "./App.css";
+import Header from "./components/Header";
 
 function App() {
   return (
     <div className="app">
-      <h1>Let's build Facebook Clone using MERN.</h1>
+      {/* HEADER */}
+      <Header />
+
+      {/* SIDEBAR */}
+      {/* FEED */}
+
+      {/* WIDGETS */}
     </div>
   );
 }
