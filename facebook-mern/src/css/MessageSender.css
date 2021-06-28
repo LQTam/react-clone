@@ -1,0 +1,78 @@
+.messageSender {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0px 5px 7px -7px rgba(0, 0, 0.75);
+  width: 100%;
+}
+.messageSender__top {
+  display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid #eff2f5;
+  margin: 0 15px;
+}
+
+.messageSender__top > .MuiAvatar-root {
+  cursor: pointer;
+}
+
+.messageSender__top > form {
+  display: flex;
+  flex: 1;
+}
+
+.messageSender__top > form > input {
+  outline-width: 0;
+  border: none;
+  border-radius: 30px;
+  background: #eff2f5;
+  padding: 5px 10px;
+  margin: 0 10px;
+}
+.messageSender__input {
+  flex: 1;
+}
+.messageSender__input:hover {
+  background: #e8ecf0;
+}
+.messageSender__fileSelector {
+  width: 20%;
+}
+.messageSender__top > form > button {
+  height: 0;
+  width: 0;
+  background: transparent;
+  color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.messageSender__bottom {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5px 15px;
+}
+
+.messageSender__option {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  color: gray;
+  padding: 0 10px;
+  flex: 0.33;
+  justify-content: center;
+  cursor: pointer;
+}
+.messageSender__option:hover {
+  background-color: #eff2f5;
+}
+.messageSender__option > .MuiSvgIcon-root {
+  font-size: xx-large;
+}
+
+.messageSender__option > h3 {
+  margin-left: 5px;
+  font-size: medium;
+}
