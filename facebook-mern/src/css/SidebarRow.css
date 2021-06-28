@@ -1,0 +1,20 @@
+.sidebar__row {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.sidebar__row:hover {
+  background: #eff2f5;
+  border-radius: 10px;
+}
+.sidebar__row > p {
+  margin-left: 10px;
+  font-weight: 400;
+}
+
+.sidebar__row > .MuiSvgIcon-root {
+  font-size: xx-large;
+  color: #2e81f4;
+}
