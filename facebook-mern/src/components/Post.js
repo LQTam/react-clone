@@ -16,7 +16,7 @@ function Post({ profilePic, message, timestamp, imgName, userName }) {
         <Avatar src={profilePic} className="post__avatar" />
         <div className="post__topInfo">
           <h3>{userName}</h3>
-          <p>{new Date().toUTCString()}</p>
+          <p>{new Date(parseInt(timestamp)).toUTCString()}</p>
         </div>
       </div>
 
@@ -24,6 +24,14 @@ function Post({ profilePic, message, timestamp, imgName, userName }) {
         <p className="post__message">{message}</p>
       </div>
 
+      {imgName && (
+        <div className="post__image">
+          <img
+            src={`${process.env.REACT_APP_ENDPOINT}/retrieve/images/single?name=${imgName}`}
+            alt={imgName}
+          />
+        </div>
+      )}
       <div className="post__options">
         <div className="post__option">
           <ThumbUp />

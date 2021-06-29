@@ -1,21 +1,51 @@
 import { Avatar, Input } from "@material-ui/core";
 import { InsertEmoticon, PhotoLibrary, Videocam } from "@material-ui/icons";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "../css/MessageSender.css";
+import { selectUserName, selectUserPhoto } from "../features/user/userSlice";
+import axios from "../axios";
 
 function MessageSender() {
   const [input, setInput] = useState("");
-  const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
+  const userPhoto = useSelector(selectUserPhoto);
+  const userName = useSelector(selectUserName);
   const handleChangeFile = (e) => {
-    if (e.target.files[0]) setImage(e.target.files[0]);
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let formData = new FormData();
+    let imgName = "";
+    if (file) {
+      formData.append("file", file);
+      let { data } = await axios.post("/upload/image", formData);
+      imgName = data.filename;
+    }
+    let postData = {
+      user: userName,
+      avatar: userPhoto,
+      imgName,
+      text: input,
+      timestamp: Date.now(),
+    };
+    let headers = {
+      accept: "application/json",
+      "Accept-Language": "en-US,en;q=0.8",
+    };
+    // "Content-Type": `multipart/form-data;boundary${formData._boundary}`,
+    let { data } = await axios.post("/upload/post", postData);
+    console.log(data);
+    setInput("");
+    setFile(null);
   };
   return (
     <div className="messageSender">
       <div className="messageSender__top">
-        <Avatar src="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B" />
+        <Avatar src={userPhoto} />
         <form>
           <input
             type="text"
@@ -26,7 +56,7 @@ function MessageSender() {
           />
           <Input
             type="file"
-            onClick={handleChangeFile}
+            onChange={handleChangeFile}
             className="messageSender__fileSelector"
           />
           <button type="submit" onClick={handleSubmit}>

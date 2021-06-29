@@ -7,16 +7,17 @@ import {
   VideoLibrary,
 } from "@material-ui/icons";
 import React from "react";
+import { useSelector } from "react-redux";
 import "../css/Sidebar.css";
+import { selectUserName, selectUserPhoto } from "../features/user/userSlice";
 import SidebarRow from "./SidebarRow";
 
 function Sidebar() {
+  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
   return (
     <div className="sidebar">
-      <SidebarRow
-        src="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B"
-        title="TamLQ"
-      />
+      <SidebarRow src={userPhoto} title={userName} />
       <SidebarRow Icon={People} title="Friends" />
       <SidebarRow Icon={Storefront} title="Marketplace" />
       <SidebarRow Icon={SupervisedUserCircle} title="Groups" />

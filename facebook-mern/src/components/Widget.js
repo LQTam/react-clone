@@ -5,13 +5,14 @@ function Widget() {
   return (
     <div className="widgets">
       <iframe
-        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FPersonal-Learning-English-103638948572232&tabs=timeline&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FPersonal-Learning-English-103638948572232&tabs=timeline&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&width=340&height=1500"
         width="340"
         height="1500"
         style={{ border: "none", overflow: "hidden" }}
         scrolling="no"
-        frameborder="0"
-        allowTransparency="true"
+        frameBorder="0"
+        allowtransparency="true"
+        title="Personal Learning English Page"
         allow="encrypted-media"
       ></iframe>
       {/* <iframe

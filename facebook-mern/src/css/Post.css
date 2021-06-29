@@ -35,6 +35,10 @@
   padding: 0 15px;
 }
 
+.post__image > img {
+  width: 100%;
+}
+
 .post__options {
   display: flex;
   justify-content: space-evenly;

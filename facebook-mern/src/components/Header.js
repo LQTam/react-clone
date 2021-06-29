@@ -12,15 +12,23 @@ import {
   SupervisedUserCircle,
 } from "@material-ui/icons";
 import "../css/Header.css";
+import { useSelector } from "react-redux";
+import { selectUserName, selectUserPhoto } from "../features/user/userSlice";
+import { Link } from "react-router-dom";
 
 function Header() {
+  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
   return (
     <div className="header">
       <div className="header__left">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/100px-Facebook_f_logo_%282019%29.svg.png"
-          alt="facebook logo"
-        />
+        <Link to="/">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/100px-Facebook_f_logo_%282019%29.svg.png"
+            alt="facebook logo"
+            width="45"
+          />
+        </Link>
       </div>
       <div className="header__input">
         <Search />
@@ -28,23 +36,23 @@ function Header() {
       </div>
       <div className="header__center">
         <div className="header__option header__option-active">
-          <Home fontsize="large" />
+          <Home fontSize="large" />
         </div>
         <div className="header__option">
-          <Flag fontsize="large" />
+          <Flag fontSize="large" />
         </div>
         <div className="header__option">
-          <SubscriptionsOutlined fontsize="large" />
+          <SubscriptionsOutlined fontSize="large" />
         </div>
         <div className="header__option">
-          <SupervisedUserCircle fontsize="large" />
+          <SupervisedUserCircle fontSize="large" />
         </div>
       </div>
 
       <div className="header__right">
         <div className="header__rightInfo">
-          <Avatar />
-          <h4>TamLQ</h4>
+          <Avatar src={userPhoto} />
+          <h4>{userName}</h4>
         </div>
 
         <IconButton>
