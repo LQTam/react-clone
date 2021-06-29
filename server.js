@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // db config
-const mongoURI = process.env.MONGO_URL;
+const mongoURI = process.env.MONGODB_URI;
 const conn = mongoose.createConnection(mongoURI, {
   useCreateIndex: true,
   useNewUrlParser: true,
