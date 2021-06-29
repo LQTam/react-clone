@@ -27,9 +27,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // db config
-const mongoURI =
-  process.env.MONGO_URL ||
-  "mongodb+srv://admin:U2g5tosCowT9bd54@cluster0.nlyri.mongodb.net/facebookdb?retryWrites=true&w=majority";
+const mongoURI = process.env.MONGO_URL;
 const conn = mongoose.createConnection(mongoURI, {
   useCreateIndex: true,
   useNewUrlParser: true,
