@@ -62,6 +62,9 @@ conn.once("open", () => {
         avatar,
         timestamp,
       });
+    } else if (change.operationType === "delete") {
+      let { _id } = change.documentKey;
+      pusher.trigger("posts", "deleted", { _id });
     } else {
       console.log("Error triggering Pusher");
     }
@@ -118,6 +121,17 @@ app.get("/retrieve/posts", (req, res) => {
   });
 });
 
+app.delete("/posts/:postId/delete", function (req, res) {
+  let { postId } = req.params;
+  mongoPosts.deleteOne({ _id: postId }, function (err, data) {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
 app.get("/retrieve/images/single", (req, res) => {
   gfs.files.findOne({ filename: req.query.name }, (err, file) => {
     if (err) {
@@ -126,12 +140,23 @@ app.get("/retrieve/images/single", (req, res) => {
       if (!file || file.length === 0)
         res.status(404).json({ err: "file not found." });
       else {
-        const readstream = gfs.createReadStream(file.filename);
-        // const readstream = gridFSBucket.openDownloadStream(file.filename);
-        readstream.pipe(res);
+        const readStream = gfs.createReadStream(file.filename);
+        // const readStream = gridFSBucket.openDownloadStream(file.filename);
+        readStream.pipe(res);
       }
     }
   });
 });
+
+app.delete("/images/:imgName/delete", function (req, res) {
+  let { imgName } = req.params;
+  gfs.files.deleteOne({ filename: imgName }, function (err, data) {
+    if (err) res.status(500).send(err);
+    else {
+      res.status(200).send(data);
+    }
+  });
+});
+
 // listen
 app.listen(port, () => console.log(`Server connected on localhost:${port}`));
