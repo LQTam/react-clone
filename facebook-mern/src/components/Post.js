@@ -1,22 +1,86 @@
 import { Avatar } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import {
   AccountCircle,
+  BookmarkBorder,
   ChatBubbleOutline,
   ExpandMoreOutlined,
+  MoreHoriz,
   NearMe,
+  NotificationsNone,
   ThumbUp,
+  Code,
+  Backspace,
+  DeleteOutlined,
 } from "@material-ui/icons";
-import React from "react";
+import React, { useState } from "react";
 import "../css/Post.css";
+import axios from "../axios";
+import { useDispatch } from "react-redux";
+import { deletePostByGivenId } from "../features/post/postSlice";
 
-function Post({ profilePic, message, timestamp, imgName, userName }) {
+function Post({ _id, profilePic, message, timestamp, imgName, userName }) {
+  const [showAction, setShowAction] = useState(false);
+  const dispatch = useDispatch();
+  const removeItem = async () => {
+    let postId = _id;
+    await axios.delete(`/posts/${postId}/delete`);
+    if (imgName) {
+      await axios.delete(`/images/${imgName}/delete`);
+    }
+    setShowAction(false);
+  };
   return (
     <div className="post">
       <div className="post__top">
         <Avatar src={profilePic} className="post__avatar" />
         <div className="post__topInfo">
-          <h3>{userName}</h3>
-          <p>{new Date(parseInt(timestamp)).toUTCString()}</p>
+          <h3>
+            <Link to="/">{userName}</Link>
+          </h3>
+          <p>
+            <Link to="/">{new Date(parseInt(timestamp)).toUTCString()}</Link>
+          </p>
+        </div>
+
+        <div className="post__topAction">
+          <MoreHoriz
+            className="action__dropdown"
+            onClick={() => setShowAction(!showAction)}
+          />
+          <div className={`action__dropdownMenu ${showAction ? `show` : ``}`}>
+            <ul>
+              <li>
+                <BookmarkBorder />
+                <span>Save Post</span>
+              </li>
+              <hr />
+              <li>
+                <NotificationsNone />
+                <span>Turn on notifications for this post</span>
+              </li>
+              <hr />
+              <li>
+                <Code />
+                <span>Emmbed</span>
+              </li>
+              <li>
+                <Backspace />
+                <span>Hide post</span>
+              </li>
+              <hr />
+              <li onClick={removeItem}>
+                <DeleteOutlined />
+                <span>
+                  Move to Recycle bin
+                  <br />
+                  <span className="note">
+                    Items in your Recycle bin are deleted after 30 days.
+                  </span>
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 

@@ -22,17 +22,19 @@ function Header() {
   return (
     <div className="header">
       <div className="header__left">
-        <Link to="/">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/100px-Facebook_f_logo_%282019%29.svg.png"
-            alt="facebook logo"
-            width="45"
-          />
-        </Link>
-      </div>
-      <div className="header__input">
-        <Search />
-        <input placeholder="Search Facebook" type="text" />
+        <div className="header__leftLogo">
+          <Link to="/">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/100px-Facebook_f_logo_%282019%29.svg.png"
+              alt="facebook logo"
+              width="45"
+            />
+          </Link>
+        </div>
+        <div className="header__input">
+          <Search />
+          <input placeholder="Search Facebook" type="text" />
+        </div>
       </div>
       <div className="header__center">
         <div className="header__option header__option-active">

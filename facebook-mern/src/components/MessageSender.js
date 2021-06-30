@@ -38,7 +38,6 @@ function MessageSender() {
     };
     // "Content-Type": `multipart/form-data;boundary${formData._boundary}`,
     let { data } = await axios.post("/upload/post", postData);
-    console.log(data);
     setInput("");
     setFile(null);
   };

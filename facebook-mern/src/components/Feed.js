@@ -1,46 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../css/Feed.css";
 import StoryReel from "./StoryReel";
 import MessageSender from "./MessageSender";
 import Post from "./Post";
 import axios from "../axios";
 import Pusher from "pusher-js";
-import { selectUserName, selectUserPhoto } from "../features/user/userSlice";
-import { useSelector } from "react-redux";
+import {
+  deletePostByGivenId,
+  selectPostsData,
+  setPostsData,
+} from "../features/post/postSlice";
+import { useDispatch, useSelector } from "react-redux";
 const pusher = new Pusher("cef11e57182d122d1edb", {
   cluster: "ap1",
 });
 
 function Feed() {
-  const [profilePic, setProfilePic] = useState("");
-  const [postsData, setPostsData] = useState([]);
-  const userName = useSelector(selectUserName);
-  const userPhoto = useSelector(selectUserPhoto);
-  const syncFeed = () => {
-    axios.get("/retrieve/posts").then(({ data }) => setPostsData(data));
-  };
+  const postsData = useSelector(selectPostsData);
+  const dispatch = useDispatch();
+  // const [postsData, setPostsData] = useState([]);
+  const syncFeed = useCallback(() => {
+    axios
+      .get("/retrieve/posts")
+      .then(({ data }) => dispatch(setPostsData(data)));
+  }, [dispatch]);
 
   useEffect(() => {
     const channel = pusher.subscribe("posts");
     channel.bind("inserted", function (data) {
       syncFeed();
     });
+    channel.bind("deleted", function (data) {
+      let { _id } = data;
+      dispatch(deletePostByGivenId({ _id }));
+      // syncFeed();
+    });
     return () => {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, []);
+  }, [syncFeed]);
 
   useEffect(() => {
     syncFeed();
-  }, []);
-  console.log(postsData);
+  }, [syncFeed]);
   return (
     <div className="feed">
       <StoryReel />
       <MessageSender />
       {postsData?.map((post, key) => (
         <Post
+          _id={post._id}
           key={key}
           profilePic={post.avatar}
           message={post.text}

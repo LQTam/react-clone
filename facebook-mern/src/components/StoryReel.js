@@ -1,24 +1,33 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import "../css/StoryReel.css";
+import { selectUserPhoto } from "../features/user/userSlice";
 import Story from "./Story";
 
 function StoryReel() {
+  let userPhoto = useSelector(selectUserPhoto);
   return (
     <div className="storyReel">
+      <Story image={userPhoto} title="Create story" />
       <Story
-        image="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B"
-        profileSrc="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B"
-        title="TamLQ"
+        image="https://revelogue.com/wp-content/uploads/2020/08/Dien-vien-vin-diesel-e1598211223921.jpg"
+        profileSrc="https://revelogue.com/wp-content/uploads/2020/08/Dien-vien-vin-diesel-e1598211223921.jpg"
+        title="UserName"
       />
       <Story
-        image="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B"
-        profileSrc="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B"
-        title="TamLQ"
+        image="https://revelogue.com/wp-content/uploads/2020/08/Dien-vien-vin-diesel-e1598211223921.jpg"
+        profileSrc="https://revelogue.com/wp-content/uploads/2020/08/Dien-vien-vin-diesel-e1598211223921.jpg"
+        title="UserName"
       />
       <Story
-        image="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B"
-        profileSrc="https://scontent.fhan5-5.fna.fbcdn.net/v/t1.18169-9/21768228_757317117787304_1170335793410169460_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=0debeb&_nc_ohc=iCt7FHNzBNMAX-BvQbl&_nc_ht=scontent.fhan5-5.fna&oh=c1acb472953a628a2ae9418150cf29e8&oe=60DCD69B"
-        title="TamLQ"
+        image="https://revelogue.com/wp-content/uploads/2020/08/Dien-vien-vin-diesel-e1598211223921.jpg"
+        profileSrc="https://revelogue.com/wp-content/uploads/2020/08/Dien-vien-vin-diesel-e1598211223921.jpg"
+        title="UserName"
+      />
+      <Story
+        image="https://revelogue.com/wp-content/uploads/2020/08/Dien-vien-vin-diesel-e1598211223921.jpg"
+        profileSrc="https://revelogue.com/wp-content/uploads/2020/08/Dien-vien-vin-diesel-e1598211223921.jpg"
+        title="UserName"
       />
     </div>
   );
