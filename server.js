@@ -52,13 +52,14 @@ conn.once("open", () => {
   changeStream.on("change", (change) => {
     console.log(change);
     if (change.operationType === "insert") {
-      let { user, imgName, text, avatar, timestamp } = change.fullDocument;
+      let { user, imgName, text, avatar, timestamp, uid } = change.fullDocument;
       pusher.trigger("posts", "inserted", {
         user,
         imgName,
         text,
         avatar,
         timestamp,
+        uid,
       });
     } else if (change.operationType === "delete") {
       let { _id } = change.documentKey;
