@@ -6,6 +6,7 @@ import Post from "./Post";
 import axios from "../axios";
 import Pusher from "pusher-js";
 import {
+  addNewPost,
   deletePostByGivenId,
   selectPostsData,
   setPostsData,
@@ -18,7 +19,6 @@ const pusher = new Pusher("cef11e57182d122d1edb", {
 function Feed() {
   const postsData = useSelector(selectPostsData);
   const dispatch = useDispatch();
-  // const [postsData, setPostsData] = useState([]);
   const syncFeed = useCallback(() => {
     axios
       .get("/retrieve/posts")
@@ -28,18 +28,17 @@ function Feed() {
   useEffect(() => {
     const channel = pusher.subscribe("posts");
     channel.bind("inserted", function (data) {
-      syncFeed();
+      dispatch(addNewPost(data));
     });
     channel.bind("deleted", function (data) {
       let { _id } = data;
       dispatch(deletePostByGivenId({ _id }));
-      // syncFeed();
     });
     return () => {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, [syncFeed]);
+  }, [dispatch]);
 
   useEffect(() => {
     syncFeed();
@@ -57,6 +56,7 @@ function Feed() {
           timestamp={post.timestamp}
           imgName={post.imgName}
           userName={post.user}
+          uid={post.uid}
         />
       ))}
     </div>

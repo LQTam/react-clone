@@ -16,12 +16,12 @@ import {
 import React, { useState } from "react";
 import "../css/Post.css";
 import axios from "../axios";
-import { useDispatch } from "react-redux";
-import { deletePostByGivenId } from "../features/post/postSlice";
+import { useSelector } from "react-redux";
+import { selectUserUID } from "../features/user/userSlice";
 
-function Post({ _id, profilePic, message, timestamp, imgName, userName }) {
+function Post({ _id, profilePic, message, timestamp, imgName, userName, uid }) {
   const [showAction, setShowAction] = useState(false);
-  const dispatch = useDispatch();
+  const userUID = useSelector(selectUserUID);
   const removeItem = async () => {
     let postId = _id;
     await axios.delete(`/posts/${postId}/delete`);
@@ -69,16 +69,18 @@ function Post({ _id, profilePic, message, timestamp, imgName, userName }) {
                 <span>Hide post</span>
               </li>
               <hr />
-              <li onClick={removeItem}>
-                <DeleteOutlined />
-                <span>
-                  Move to Recycle bin
-                  <br />
-                  <span className="note">
-                    Items in your Recycle bin are deleted after 30 days.
+              {uid === userUID && (
+                <li onClick={removeItem}>
+                  <DeleteOutlined />
+                  <span>
+                    Move to Recycle bin
+                    <br />
+                    <span className="note">
+                      Items in your Recycle bin are deleted after 30 days.
+                    </span>
                   </span>
-                </span>
-              </li>
+                </li>
+              )}
             </ul>
           </div>
         </div>

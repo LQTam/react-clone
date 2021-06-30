@@ -29,5 +29,6 @@ export const { setUserLogin, setSignOut } = userSlice.actions;
 export const selectUserName = (state) => state.user.displayName;
 export const selectUserEmail = (state) => state.user.email;
 export const selectUserPhoto = (state) => state.user.photoURL;
+export const selectUserUID = (state) => state.user.uid;
 
 export default userSlice.reducer;
