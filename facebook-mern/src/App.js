@@ -9,29 +9,26 @@ import { Switch } from "react-router-dom";
 import Login from "./components/Login";
 import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserName, setUserLogin } from "./features/user/userSlice";
+import { selectUserUID, setUserLogin } from "./features/user/userSlice";
 
 function App() {
   const dispatch = useDispatch();
-  const userName = useSelector(selectUserName);
+  const userName = useSelector(selectUserUID);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        let { displayName, email, photoURL } = user;
-        dispatch(setUserLogin({ displayName, email, photoURL }));
+        let { displayName, email, photoURL, uid } = user;
+        dispatch(setUserLogin({ displayName, email, photoURL, uid }));
       }
     });
   }, [dispatch]);
   return (
     <div className="app">
-      {!userName ? (
-        <Login />
-      ) : (
-        <Router>
+      <Router>
+        {!userName ? (
+          <Login />
+        ) : (
           <Switch>
-            {/* <Route path="/login">
-              <Login />
-            </Route> */}
             <Route path="/">
               <Header />
               <div className="app__body">
@@ -46,8 +43,8 @@ function App() {
               </div>
             </Route>
           </Switch>
-        </Router>
-      )}
+        )}
+      </Router>
     </div>
   );
 }

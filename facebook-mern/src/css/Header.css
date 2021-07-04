@@ -92,3 +92,9 @@
 .header__right > .MuiIconButton-root:hover {
   background-color: #c6cdd4;
 }
+
+.header__rightLogout > .MuiPopover-paper {
+  top: 67px !important;
+  left: auto !important;
+  right: 45px !important;
+}

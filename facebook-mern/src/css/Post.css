@@ -62,25 +62,25 @@
   right: 5px;
   transform: rotate(45deg);
   z-index: 1;
-  background: white;
+  background: #f7f7f7;
+  transition: all 200ms ease-in-out;
 }
 .action__dropdownMenu {
-  display: none;
-  position: absolute;
-  top: 41px;
-  right: 5px;
-  width: 350px;
-  background: white;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.17);
-  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.17);
-  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.17);
-  padding: 10px;
-  border-radius: 8px;
-  z-index: 1;
+  top: 41px !important;
+  right: 5px !important;
+  left: auto !important;
+  transform: translate3d(0, 0, 0) !important;
 }
-
-.action__dropdownMenu.show {
-  display: block;
+.action__dropdownMenu::after {
+  position: absolute;
+  content: "";
+  width: 16px;
+  height: 8px;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  background: white;
+  border-radius: 0 4px 0 0;
 }
 ul {
   padding-left: 0;
@@ -89,6 +89,8 @@ ul {
 }
 ul > hr {
   border-color: #ffffff;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 ul > li {
   display: flex;
@@ -112,8 +114,55 @@ li .note {
   padding: 0 15px;
 }
 
-.post__image > img {
+.item1 {
+  grid-area: item1;
+}
+.item2 {
+  grid-area: item2;
+}
+.item3 {
+  grid-area: item3;
+}
+.item4 {
+  grid-area: item4;
+}
+.post__image {
+  display: grid;
+  margin-bottom: 2px;
+}
+.post__imageItem {
+  border: 1px solid lightgrey;
+  margin: 1px;
+}
+.post__image.one-image {
+  grid-template-areas: "item1";
+}
+.post__image.two-image {
+  grid-template-areas: "item1 item2";
+}
+.post__image.three-image {
+  grid-template-areas: "item1 item2" "item1 item3";
+}
+.post__image.image-more {
+  grid-template-areas: "item1 item1 item1" "item2 item3 item4";
+}
+.post__image img,
+.post__image video {
   width: 100%;
+  cursor: pointer;
+  object-fit: contain;
+}
+.post__image.image-more > .item4 {
+  position: relative;
+}
+.post__image.image-more > .item4 > .numberImageMore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: gray;
 }
 
 .post__options {

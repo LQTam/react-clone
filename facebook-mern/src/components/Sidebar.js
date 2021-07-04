@@ -9,15 +9,15 @@ import {
 import React from "react";
 import { useSelector } from "react-redux";
 import "../css/Sidebar.css";
-import { selectUserName, selectUserPhoto } from "../features/user/userSlice";
+import { selectUserEmail, selectUserPhoto } from "../features/user/userSlice";
 import SidebarRow from "./SidebarRow";
 
 function Sidebar() {
-  const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectUserEmail);
   const userPhoto = useSelector(selectUserPhoto);
   return (
     <div className="sidebar">
-      <SidebarRow src={userPhoto} title={userName} />
+      <SidebarRow src={userPhoto} title={userEmail} />
       <SidebarRow Icon={People} title="Friends" />
       <SidebarRow Icon={Storefront} title="Marketplace" />
       <SidebarRow Icon={SupervisedUserCircle} title="Groups" />

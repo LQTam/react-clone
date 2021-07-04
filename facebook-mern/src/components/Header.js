@@ -1,7 +1,10 @@
 import React from "react";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import { Avatar, IconButton } from "@material-ui/core";
 import {
   Add,
+  ExitToApp,
   ExpandMore,
   Flag,
   Forum,
@@ -12,13 +15,42 @@ import {
   SupervisedUserCircle,
 } from "@material-ui/icons";
 import "../css/Header.css";
-import { useSelector } from "react-redux";
-import { selectUserName, selectUserPhoto } from "../features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectUserEmail,
+  selectUserPhoto,
+  setSignOut,
+} from "../features/user/userSlice";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
 
 function Header() {
-  const userName = useSelector(selectUserName);
+  const userEmail = useSelector(selectUserEmail);
   const userPhoto = useSelector(selectUserPhoto);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const dispatch = useDispatch();
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const signOut = () => {
+    var answer = window.confirm("Are you sure you want to logout?");
+    if (answer) {
+      auth
+        .signOut()
+        .then(() => {
+          dispatch(setSignOut());
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div className="header">
       <div className="header__left">
@@ -54,9 +86,8 @@ function Header() {
       <div className="header__right">
         <div className="header__rightInfo">
           <Avatar src={userPhoto} />
-          <h4>{userName}</h4>
+          <h4>{userEmail}</h4>
         </div>
-
         <IconButton>
           <Add />
         </IconButton>
@@ -66,9 +97,25 @@ function Header() {
         <IconButton>
           <NotificationsActive />
         </IconButton>
-        <IconButton>
+        <IconButton
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
           <ExpandMore />
         </IconButton>
+        <Menu
+          className="header__rightLogout"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={signOut}>
+            <ExitToApp />
+            <span>Logout</span>
+          </MenuItem>
+        </Menu>
       </div>
     </div>
   );

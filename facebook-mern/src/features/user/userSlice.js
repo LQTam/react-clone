@@ -4,6 +4,7 @@ const initialState = {
   displayName: "",
   email: "",
   photoURL: "",
+  uid: null,
 };
 
 const userSlice = createSlice({
@@ -11,10 +12,11 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserLogin: (state, action) => {
-      const { email, displayName, photoURL } = action.payload;
+      const { email, displayName, photoURL, uid } = action.payload;
       state.email = email;
       state.displayName = displayName;
       state.photoURL = photoURL;
+      state.uid = uid;
     },
     setSignOut: (state) => {
       state.displayName = null;

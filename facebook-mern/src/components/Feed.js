@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import "../css/Feed.css";
 import StoryReel from "./StoryReel";
 import MessageSender from "./MessageSender";
@@ -57,6 +57,7 @@ function Feed() {
           imgName={post.imgName}
           userName={post.user}
           uid={post.uid}
+          images={post.images}
         />
       ))}
     </div>

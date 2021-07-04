@@ -16,7 +16,7 @@ function Story({ image, profileSrc, title }) {
       ></div>
       {profileSrc && <Avatar src={profileSrc} className="story__avatar" />}
       {!profileSrc && <Add className="createStoryPlus" />}
-      <h4 className={!profileSrc && "createStoryText"}>{title}</h4>
+      <h4 className={!profileSrc ? "createStoryText" : ""}>{title}</h4>
     </div>
   );
 }

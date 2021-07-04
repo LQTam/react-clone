@@ -1,3 +1,274 @@
 .widgets {
   flex: 0.33;
 }
+
+.online__users {
+  padding: 20px 0;
+  background: #eff2f5;
+  padding-bottom: 10px;
+  border-bottom: 2px solid lightgrey;
+  margin-bottom: 20px;
+  max-height: 230px;
+  overflow-y: scroll;
+}
+.user {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0 10px;
+}
+.user:hover {
+  background: rgb(212 212 212);
+}
+.user > .user__avatar {
+  position: relative;
+}
+.user > .user__avatar:after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  background: #31a24c;
+}
+.user > .user__name {
+  margin-left: 10px;
+  text-transform: capitalize;
+}
+
+.chat__windows {
+  display: flex;
+  position: fixed;
+  bottom: 5px;
+  right: 90px;
+}
+.chat__window {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 350px;
+  background: white;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0px 0px 10px lightgrey;
+  margin: 0 5px;
+}
+
+.chat__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  box-shadow: 0px 2px 2px #eff2f5;
+}
+
+.chat__header > .chat__info {
+  display: flex;
+  align-items: center;
+}
+.chat__info {
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 4px;
+  padding: 0 5px;
+}
+.chat__info:hover {
+  background: #eff2f5;
+}
+.chat__header > .chat__info > h4 {
+  margin-left: 10px;
+  display: inline-block;
+  max-width: 115px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+.chat__header > .chat__options {
+  display: flex;
+  margin-right: 5px;
+}
+
+.chat__header .chat__option > .MuiIconButton-root {
+  padding: 5px;
+  color: purple;
+}
+
+.chat__messages {
+  padding: 0 10px;
+  flex: 1;
+}
+.message__box {
+  display: flex;
+  margin: 30px 0;
+  justify-content: flex-end;
+}
+.message__box:hover > .message__options {
+  visibility: visible;
+}
+
+.message__box.sender {
+  margin-left: auto;
+}
+
+.message__box > .user__avatar {
+  align-self: flex-end;
+}
+.message__box.sender > .user__avatar {
+  display: none;
+}
+.message__box.sender > .message {
+  order: 2;
+}
+
+.message__box > .message {
+  background: #eff2f5;
+  border-radius: 30px;
+  padding-left: 15px;
+  margin-left: 5px;
+  padding-right: 10px;
+}
+.message__box.sender > .message__options {
+  direction: rtl;
+}
+.message__box > .message__options {
+  display: flex;
+  align-items: center;
+  margin-left: 2px;
+  visibility: hidden;
+}
+.message__box .message__option > .MuiIconButton-root {
+  padding: 5px;
+}
+
+.chat__footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.footer__options {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+.footer__option > .MuiIconButton-root {
+  padding: 5px;
+  color: #2e81f4;
+}
+
+.chat__footer > .messageSenderBox {
+  display: flex;
+  align-items: center;
+}
+.messageSenderBox > form {
+  position: relative;
+}
+.messageSenderBox > form > input {
+  outline-width: 0;
+  border: none;
+  background: #eff2f5;
+  border-radius: 30px;
+  padding: 10px 10px;
+  width: 170px;
+  margin-bottom: 0;
+}
+
+.messageSenderBox > form > button {
+  display: none;
+}
+.messageSenderBox > form > .chooseEmojiMessage {
+  position: absolute;
+  right: 2px;
+  cursor: pointer;
+  top: 2px;
+  z-index: 1;
+  border-radius: 50%;
+  padding: 4px;
+  color: #2e81f4;
+}
+.messageSenderBox > form > .chooseEmojiMessage:hover {
+  background: #d0d2d4;
+}
+.messageSenderBox > .MuiIconButton-root {
+  padding: 5px;
+  margin-left: 5px;
+  color: #2e81f4;
+}
+.minimize__chats {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  bottom: 15px;
+  right: 25px;
+}
+.minimize__chats > .moreAction {
+  background: white;
+  margin: 5px 0;
+}
+.minimize__chats > .moreAction:hover,
+.minimize__chats > .newMessage:hover {
+  background: rgb(218, 211, 211);
+}
+.minimize__chats > .newMessage {
+  background: white;
+  margin: 5px 0;
+}
+.minimize__chats > .minimiz__chat {
+  cursor: pointer;
+  position: relative;
+  margin: 5px 0;
+}
+.minimize__chats > .minimiz__chat:hover > .close,
+.minimize__chats > .minimiz__chat:hover > .user__info {
+  display: block;
+}
+.minimize__chats > .minimiz__chat > .MuiAvatar-root {
+  width: 48px;
+  height: 48px;
+}
+.minimize__chats > .minimiz__chat > .close {
+  position: absolute;
+  top: -7px;
+  right: 0;
+  z-index: 1;
+  background: white;
+  border-radius: 50%;
+  padding: 3px 3px;
+  cursor: pointer;
+  display: none;
+}
+
+.minimiz__chat > .user__info {
+  position: absolute;
+  right: 65px;
+  bottom: 0;
+  z-index: 1;
+  border-radius: 10px;
+  background: white;
+  padding: 5px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  display: none;
+}
+
+.minimiz__chat > .user__info:after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  transform: rotate(45deg) translateY(-50%);
+  background: white;
+}
+
+.minimiz__chat > .user__info > h4 {
+  margin: 0;
+}
+.minimiz__chat > .user__info > p {
+  margin: 0;
+  margin-top: 5px;
+}

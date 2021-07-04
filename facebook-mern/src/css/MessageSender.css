@@ -23,7 +23,7 @@
   flex: 1;
 }
 
-.messageSender__top > form > input {
+.messageSender__top > form > input[type="text"] {
   outline-width: 0;
   border: none;
   border-radius: 30px;
@@ -39,6 +39,8 @@
 }
 .messageSender__fileSelector {
   width: 20%;
+  display: none;
+  align-self: center;
 }
 .messageSender__top > form > button {
   height: 0;
