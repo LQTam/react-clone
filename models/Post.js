@@ -17,9 +17,9 @@ const Image = mongoose.Schema(
 const postModel = mongoose.Schema(
   {
     user: { type: String, required: true },
-    imgName: { type: String, required: true },
+    imgName: { type: String },
     text: { type: String, required: false },
-    avatar: { type: String, required: true },
+    avatar: { type: String },
     timestamp: { type: String, required: true },
     uid: { type: String, required: true },
     images: [Image],
