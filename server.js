@@ -8,7 +8,7 @@ import userRoute from "./routes/users.js";
 import { pusher } from "./config/pusher.js";
 import helmet from "helmet";
 import { express } from "./config/variables.js";
-import mogan from "morgan";
+import morgan from "morgan";
 
 // app config
 const app = express();
