@@ -97,6 +97,11 @@ const conn = mongoose.createConnection(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+mongoose.connect(mongoURI, {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 conn.once("open", () => {
   console.log("DB Connected");
