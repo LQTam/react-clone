@@ -1,36 +1,18 @@
-import { Avatar, IconButton } from "@material-ui/core";
-import {
-  Add,
-  Apps,
-  ArrowDropDown,
-  Call,
-  Close,
-  Gif,
-  Image,
-  InsertEmoticon,
-  Minimize,
-  MoreVert,
-  NoteAdd,
-  Share,
-  ThumbUp,
-  Videocam,
-} from "@material-ui/icons";
-import { createRef, useEffect, useState } from "react";
+import { IconButton } from "@material-ui/core";
+import { MoreVert, NoteAdd } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 import "../css/Widget.css";
 import axios from "../axios";
 import { useSelector } from "react-redux";
 import { selectUserUID } from "../features/user/userSlice";
+import ChatWindow from "./ChatWindow";
+import OnlineUser from "./OnlineUser";
+import MinimizeChat from "./MinimizeChat";
 function Widget() {
   const uid = useSelector(selectUserUID);
   const [chatWindows, setChatWindows] = useState([]);
   const [chatMinimizes, setChatMinimizes] = useState([]);
-  const [elRefs, setElRefs] = useState([]);
-  const handleSendMessage = (e, user, key) => {
-    e.preventDefault();
-    const inputEl = elRefs[key]?.current;
-    inputEl.value = "";
-  };
-  const addToChat = (user, key) => {
+  const addToChat = (user) => {
     if (chatWindows.length <= 0) {
       let minimizeIndex = chatMinimizes.findIndex(
         (item) => item.uid === user.uid
@@ -61,7 +43,6 @@ function Widget() {
         if (minimizeIndex > -1 && chatWindowIndex < 0) {
           chatMinimizes.splice(minimizeIndex, 1);
           if (chatWindows.length <= 2) {
-            console.log("run here");
             setChatWindows([user, ...chatWindows]);
             setChatMinimizes([...chatMinimizes]);
           } else {
@@ -70,7 +51,16 @@ function Widget() {
             setChatMinimizes([minimizeUser, ...chatMinimizes]);
           }
         } else {
-          elRefs[key].current.focus();
+          const userNameAllChatWindow = document.querySelectorAll(
+            ".chat__window>.chat__header .user__name"
+          );
+          const elClicked = Array.from(userNameAllChatWindow).filter(
+            (el) => el.innerText === (user.displayName || user.email)
+          )[0];
+          const input = elClicked
+            .closest(".chat__window")
+            .querySelector(".messageSenderBox>form>input");
+          input.focus();
         }
       }
     }
@@ -108,161 +98,22 @@ function Widget() {
     );
     messageSenderInput[0]?.focus();
   }, [chatWindows]);
-  useEffect(() => {
-    setElRefs((elRefs) =>
-      Array(chatWindows.length)
-        .fill()
-        .map((_, i) => elRefs[i] || createRef())
-    );
-  }, [chatWindows]);
   return (
     <div className="widgets">
       <div className="online__users">
         {users?.map((user, key) => (
-          <div key={key} className="user" onClick={() => addToChat(user, key)}>
-            <div className="user__avatar">
-              <Avatar src={user.photoURL} />
-            </div>
-            <h4 className="user__name">{user.displayName || user.email}</h4>
-          </div>
+          <OnlineUser user={user} key={key} addToChat={addToChat} />
         ))}
       </div>
+
       <div className="chat__windows">
         {chatWindows?.map((user, key) => (
-          <div key={key} className="chat__window">
-            <div className="chat__header">
-              <div className="chat__info">
-                <div className="user__avatar">
-                  <Avatar src={user.photoURL} />
-                </div>
-                <h4 className="user__name">{user.displayName || user.email}</h4>
-                <ArrowDropDown />
-              </div>
-              <div className="chat__options">
-                <div className="chat__option">
-                  <IconButton>
-                    <Videocam />
-                  </IconButton>
-                </div>
-                <div className="chat__option">
-                  <IconButton>
-                    <Call />
-                  </IconButton>
-                </div>
-                <div
-                  className="chat__option"
-                  onClick={() => minimizeChatWindow(user)}
-                >
-                  <IconButton>
-                    <Minimize />
-                  </IconButton>
-                </div>
-                <div
-                  className="chat__option"
-                  onClick={() => handleCloseChat(user)}
-                >
-                  <IconButton>
-                    <Close />
-                  </IconButton>
-                </div>
-              </div>
-            </div>
-            <div className="chat__messages">
-              <div className="message__box">
-                <Avatar src={user.photoURL} className="user__avatar" />
-                <div className="message">
-                  <p>Oki toi dang setup gioi han devices</p>
-                </div>
-                <div className="message__options">
-                  <div className="message__option">
-                    <IconButton>
-                      <InsertEmoticon fontSize="small" />
-                    </IconButton>
-                  </div>
-                  <div className="message__option">
-                    <IconButton>
-                      <Share fontSize="small" />
-                    </IconButton>
-                  </div>
-                  <div className="message__option">
-                    <IconButton>
-                      <MoreVert fontSize="small" />
-                    </IconButton>
-                  </div>
-                </div>
-              </div>
-              <div className="message__box sender">
-                <Avatar src={user.photoURL} className="user__avatar" />
-                <div className="message">
-                  <p>Oke t cho test</p>
-                </div>
-                <div className="message__options">
-                  <div className="message__option">
-                    <IconButton>
-                      <InsertEmoticon fontSize="small" />
-                    </IconButton>
-                  </div>
-                  <div className="message__option">
-                    <IconButton>
-                      <Share fontSize="small" />
-                    </IconButton>
-                  </div>
-                  <div className="message__option">
-                    <IconButton>
-                      <MoreVert fontSize="small" />
-                    </IconButton>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="chat__footer">
-              <div className="footer__options">
-                <div className="footer__option">
-                  <IconButton
-                    style={{
-                      color: "white",
-                      backgroundColor: "#2e81f4",
-                      padding: "0",
-                    }}
-                  >
-                    <Add fontSize="small" />
-                  </IconButton>
-                </div>
-                <div className="footer__option">
-                  <IconButton>
-                    <Image />
-                  </IconButton>
-                </div>
-                <div className="footer__option">
-                  <IconButton>
-                    <Apps />
-                  </IconButton>
-                </div>
-                <div className="footer__option">
-                  <IconButton
-                    style={{
-                      color: "white",
-                      backgroundColor: "#2e81f4",
-                      padding: "0",
-                    }}
-                  >
-                    <Gif fontSize="small" />
-                  </IconButton>
-                </div>
-              </div>
-
-              <div className="messageSenderBox">
-                <form onSubmit={(e) => handleSendMessage(e, user, key)}>
-                  <input type="text" placeholder="Aa" ref={elRefs[key]} />
-                  <InsertEmoticon className="chooseEmojiMessage" />
-                  <button type="submit">Send</button>
-                </form>
-                <IconButton>
-                  <ThumbUp />
-                </IconButton>
-              </div>
-            </div>
-          </div>
+          <ChatWindow
+            key={key}
+            user={user}
+            minimizeChatWindow={minimizeChatWindow}
+            handleCloseChat={handleCloseChat}
+          />
         ))}
       </div>
       <div className="minimize__chats">
@@ -270,20 +121,12 @@ function Widget() {
           <MoreVert />
         </IconButton>
         {chatMinimizes?.map((user, key) => (
-          <div key={key} className="minimiz__chat">
-            <Avatar
-              src={user.photoURL}
-              fontSize="large"
-              onClick={() => addToChat(user, key)}
-            />
-            <div className="close" onClick={() => handleCloseChat(user)}>
-              X
-            </div>
-            <div className="user__info">
-              <h4>{user.displayName || user.email}</h4>
-              <p>Last message</p>
-            </div>
-          </div>
+          <MinimizeChat
+            key={key}
+            user={user}
+            addToChat={addToChat}
+            handleCloseChat={handleCloseChat}
+          />
         ))}
         <IconButton className="newMessage">
           <NoteAdd />

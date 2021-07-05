@@ -231,20 +231,20 @@
   background: white;
   margin: 5px 0;
 }
-.minimize__chats > .minimiz__chat {
+.minimize__chats > .minimize__chat {
   cursor: pointer;
   position: relative;
   margin: 5px 0;
 }
-.minimize__chats > .minimiz__chat:hover > .close,
-.minimize__chats > .minimiz__chat:hover > .user__info {
+.minimize__chats > .minimize__chat:hover > .close,
+.minimize__chats > .minimize__chat:hover > .user__info {
   display: block;
 }
-.minimize__chats > .minimiz__chat > .MuiAvatar-root {
+.minimize__chats > .minimize__chat > .MuiAvatar-root {
   width: 48px;
   height: 48px;
 }
-.minimize__chats > .minimiz__chat > .close {
+.minimize__chats > .minimize__chat > .close {
   position: absolute;
   top: -7px;
   right: 0;
@@ -256,7 +256,7 @@
   display: none;
 }
 
-.minimiz__chat > .user__info {
+.minimize__chat > .user__info {
   position: absolute;
   right: 65px;
   bottom: 0;
@@ -269,7 +269,7 @@
   display: none;
 }
 
-.minimiz__chat > .user__info:after {
+.minimize__chat > .user__info:after {
   content: "";
   width: 15px;
   height: 15px;
@@ -280,10 +280,10 @@
   background: white;
 }
 
-.minimiz__chat > .user__info > h4 {
+.minimize__chat > .user__info > h4 {
   margin: 0;
 }
-.minimiz__chat > .user__info > p {
+.minimize__chat > .user__info > p {
   margin: 0;
   margin-top: 5px;
 }
