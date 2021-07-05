@@ -1,6 +1,7 @@
+import express from "express";
 import Post from "../models/Post.js";
 import { s3 } from "../config/s3.js";
-import express from "express";
+import { BUCKET_NAME } from "../config/variables.js";
 const router = express.Router();
 router.post("/upload/post", (req, res) => {
   const dbPost = req.body;
