@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Avatar, IconButton } from "@material-ui/core";
@@ -21,15 +21,25 @@ import {
   selectUserPhoto,
   setSignOut,
 } from "../features/user/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { auth } from "../firebase";
+import { HOME, LOGIN } from "../routes";
 
 function Header() {
   const userEmail = useSelector(selectUserEmail);
   const userPhoto = useSelector(selectUserPhoto);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch();
-
+  const history = useHistory();
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        history.push(HOME);
+      } else {
+        history.push(LOGIN);
+      }
+    });
+  }, [dispatch, history]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

@@ -33,16 +33,15 @@ function MessageSender() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (input !== "" || input !== null) {
+    if (input !== "" && input !== null) {
       let formData = new FormData();
       let images = [];
-      if (files) {
+      if (files.length > 0) {
         for (let i = 0; i < files.length; i++) {
           formData.append("file", files[i]);
         }
         formData.append("uid", uid);
         let { data } = await axios.post("/upload/image", formData);
-        console.log(data);
         images = data.data;
       }
       let postData = {

@@ -1,5 +1,20 @@
 .widgets {
   flex: 0.33;
+  position: fixed;
+  right: 0;
+}
+
+.widgets ::-webkit-scrollbar {
+  width: 10px;
+}
+.widgets ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.widgets ::-webkit-scrollbar-thumb {
+  background: #888;
+}
+.widgets ::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .online__users {

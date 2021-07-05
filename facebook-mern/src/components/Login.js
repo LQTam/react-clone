@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "../css/Login.css";
 import { setUserLogin } from "../features/user/userSlice";
 import { auth, provider } from "../firebase";
+import { HOME } from "../routes";
 
 function Login() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -16,6 +18,7 @@ function Login() {
       .signInWithPopup(provider)
       .then(({ user: { displayName, email, photoURL, uid } }) => {
         dispatch(setUserLogin({ displayName, email, photoURL, uid }));
+        history.push(HOME);
       })
       .catch((err) => setError(err.message));
   };
@@ -32,6 +35,7 @@ function Login() {
       .signInWithEmailAndPassword(email, password)
       .then(({ user: { displayName, email, photoURL, uid } }) => {
         dispatch(setUserLogin({ displayName, email, photoURL, uid }));
+        history.push(HOME);
       })
       .catch((err) => setError(err.message));
   };

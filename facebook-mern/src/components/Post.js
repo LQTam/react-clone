@@ -36,13 +36,14 @@ function Post({
   uid,
   images,
 }) {
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
   const userUID = useSelector(selectUserUID);
   const removeItem = async () => {
     let postId = _id;
     await axios.delete(`/posts/${postId}/delete`, { data: { images } });
+    setOpen(false);
   };
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -160,13 +161,13 @@ function Post({
 
       <div
         className={`post__image ${
-          images.length === 1
+          images?.length === 1
             ? "one-image"
-            : images.length === 2
+            : images?.length === 2
             ? "two-image"
-            : images.length === 3
+            : images?.length === 3
             ? "three-image"
-            : images.length >= 4
+            : images?.length >= 4
             ? "image-more"
             : ""
         }`}
@@ -192,7 +193,7 @@ function Post({
             []
           )
         )}
-        {images.length > 4 && (
+        {images?.length > 4 && (
           <div className={`post__imageItem item4`}>
             {images[3].mimetype.includes("image") ? (
               <img
@@ -207,7 +208,7 @@ function Post({
                 ></source>
               </video>
             )}
-            <span className="numberImageMore">+{images.length - 3}</span>
+            <span className="numberImageMore">+{images?.length - 3}</span>
           </div>
         )}
       </div>

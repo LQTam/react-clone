@@ -1,3 +1,4 @@
+import { Avatar } from "@material-ui/core";
 import {
   EmojiFlags,
   ExpandMoreOutlined,
@@ -17,7 +18,10 @@ function Sidebar() {
   const userPhoto = useSelector(selectUserPhoto);
   return (
     <div className="sidebar">
-      <SidebarRow src={userPhoto} title={userEmail} />
+      <div className="sidebar__row">
+        {userPhoto ? <Avatar src={userPhoto} /> : <Avatar />}
+        <p>{userEmail}</p>
+      </div>
       <SidebarRow Icon={People} title="Friends" />
       <SidebarRow Icon={Storefront} title="Marketplace" />
       <SidebarRow Icon={SupervisedUserCircle} title="Groups" />
