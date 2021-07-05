@@ -7,7 +7,7 @@ import postRoute from "./routes/posts.js";
 import imageRoute from "./routes/images.js";
 import userRoute from "./routes/users.js";
 import { pusher } from "./config/pusher.js";
-// import helmet from "helmet";
+import helmet from "helmet";
 
 // app config
 const app = express();
@@ -16,7 +16,7 @@ const port = process.env.PORT || 9000;
 //middleware
 app.use(bodyParser.json());
 app.use(cors());
-// app.use(helmet());
+app.use(helmet());
 
 // db config
 const mongoURI = process.env.MONGODB_URI || process.env.MONGODB_URI_LOCAL;
