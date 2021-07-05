@@ -81,6 +81,7 @@ import { BUCKET_NAME } from "./config/variables.js";
 import { s3 } from "./config/s3.js";
 import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";
+import imageRoutes from "./routes/images.js";
 import { randomInt } from "crypto";
 // app config
 const app = express();
@@ -130,53 +131,54 @@ conn.once("open", () => {
 });
 
 //** SAVE TO S3  */
-const storage = multer.diskStorage({
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now() + "-" + randomInt(100));
-  },
-});
-// const uploadFiles = multer({ storage }).single('file');
-const uploadFiles = multer({ storage }).array("file", 10);
+// const storage = multer.diskStorage({
+//   filename: function (req, file, cb) {
+//     cb(null, file.fieldname + "-" + Date.now() + "-" + randomInt(100));
+//   },
+// });
+// // const uploadFiles = multer({ storage }).single('file');
+// const uploadFiles = multer({ storage }).array("file", 10);
 
 //api routes
 app.get("/", (req, res) => res.status(200).send("Hello World!"));
 
-app.post("/upload/image", uploadFiles, (req, res) => {
-  try {
-    const { files } = req;
-    const { uid } = req.body;
-    let dataResponse = [];
-    files.map(async (file) => {
-      const fileContent = fs.readFileSync(file.path);
-      let mimeType = file.mimetype;
-      let filename = `${file.filename}${path.extname(file.originalname)}`;
-      const params = {
-        Bucket: `${BUCKET_NAME}/posts/${mimeType}/${uid}`,
-        Key: filename, // File name you want to save as in S3
-        Body: fileContent,
-        ACL: "public-read",
-      };
-      let { key } = await s3.upload(params).promise();
-      file.showLink = key;
-      dataResponse.push(file);
-      await fs.unlinkSync(file.path);
-      if (dataResponse.length === files.length) {
-        res.json({
-          message: "File Uploaded SuceesFully",
-          data: dataResponse,
-        });
-      }
-    });
-  } catch (error) {
-    console.log(error);
+// app.post("/upload/image", uploadFiles, (req, res) => {
+//   try {
+//     const { files } = req;
+//     const { uid } = req.body;
+//     let dataResponse = [];
+//     files.map(async (file) => {
+//       const fileContent = fs.readFileSync(file.path);
+//       let mimeType = file.mimetype;
+//       let filename = `${file.filename}${path.extname(file.originalname)}`;
+//       const params = {
+//         Bucket: `${BUCKET_NAME}/posts/${mimeType}/${uid}`,
+//         Key: filename, // File name you want to save as in S3
+//         Body: fileContent,
+//         ACL: "public-read",
+//       };
+//       let { key } = await s3.upload(params).promise();
+//       file.showLink = key;
+//       dataResponse.push(file);
+//       await fs.unlinkSync(file.path);
+//       if (dataResponse.length === files.length) {
+//         res.json({
+//           message: "File Uploaded SuceesFully",
+//           data: dataResponse,
+//         });
+//       }
+//     });
+//   } catch (error) {
+//     console.log(error);
 
-    if (error.code === "LIMIT_UNEXPECTED_FILE") {
-      return res.send("Too many files to upload.");
-    }
-    return res.send(`Error when trying upload many files: ${error}`);
-  }
-});
+//     if (error.code === "LIMIT_UNEXPECTED_FILE") {
+//       return res.send("Too many files to upload.");
+//     }
+//     return res.send(`Error when trying upload many files: ${error}`);
+//   }
+// });
 
+app.use("/", imageRoutes);
 app.use("/", postRoutes);
 app.use("/", userRoutes);
 
