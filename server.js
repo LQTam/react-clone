@@ -1,3 +1,4 @@
+import express from express;
 import mongoose from "mongoose";
 // import cors from "cors";
 import bodyParser from "body-parser";
@@ -7,7 +8,7 @@ import imageRoute from "./routes/images.js";
 import userRoute from "./routes/users.js";
 import { pusher } from "./config/pusher.js";
 import helmet from "helmet";
-import { express } from "./config/variables.js";
+
 import morgan from "morgan";
 
 // app config

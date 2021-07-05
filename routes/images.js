@@ -1,9 +1,10 @@
 import { randomInt } from "crypto";
 import path from "path";
 import fs from "fs";
+import express from express;
 import multer from "multer";
 import { s3 } from "../config/s3.js";
-import { BUCKET_NAME, express } from "../config/variables.js";
+import { BUCKET_NAME } from "../config/variables.js";
 const router = express.Router();
 
 //** SAVE TO S3  */
