@@ -107,16 +107,17 @@ conn.once("open", () => {
   console.log("DB Connected");
   const changeStream = conn.db.collection("posts").watch();
   changeStream.on("change", (change) => {
-    console.log(change);
     if (change.operationType === "insert") {
-      let { user, imgName, text, avatar, timestamp, uid } = change.fullDocument;
+      let { _id } = change.documentKey;
+      let { user, text, avatar, timestamp, uid, images } = change.fullDocument;
       pusher.trigger("posts", "inserted", {
         user,
-        imgName,
+        _id,
         text,
         avatar,
         timestamp,
         uid,
+        images,
       });
     } else if (change.operationType === "delete") {
       let { _id } = change.documentKey;
