@@ -76,7 +76,7 @@ import multer from "multer";
 import bodyParser from "body-parser";
 import path from "path";
 import { pusher } from "./config/pusher.js";
-
+import helmet from "helmet";
 import { BUCKET_NAME } from "./config/variables.js";
 import { s3 } from "./config/s3.js";
 import postRoutes from "./routes/posts.js";
@@ -89,6 +89,7 @@ const port = process.env.PORT || 9000;
 //middleware
 app.use(bodyParser.json());
 app.use(cors());
+app.use(helmet());
 
 // db config
 const mongoURI = process.env.MONGODB_URI || process.env.MONGODB_URI_LOCAL;
