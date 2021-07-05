@@ -8,6 +8,7 @@ import userRoute from "./routes/users.js";
 import { pusher } from "./config/pusher.js";
 import helmet from "helmet";
 import { express } from "./config/variables.js";
+import mogan from "morgan";
 
 // app config
 const app = express();
@@ -17,6 +18,7 @@ const port = process.env.PORT || 9000;
 app.use(bodyParser.json());
 // app.use(cors());
 app.use(helmet());
+app.use(morgan("common"));
 
 // db config
 const mongoURI = process.env.MONGODB_URI || process.env.MONGODB_URI_LOCAL;
