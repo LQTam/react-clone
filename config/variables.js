@@ -1,4 +1,4 @@
 import expressModule from "express";
 
-export const BUCKET_NAME = "facebook-mern-s3";
+export const BUCKET_NAME = process.env.BUCKET_NAME;
 export const express = expressModule;
