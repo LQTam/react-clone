@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import cors from "cors";
+// import cors from "cors";
 import bodyParser from "body-parser";
 import "dotenv/config";
 import postRoute from "./routes/posts.js";
@@ -15,7 +15,7 @@ const port = process.env.PORT || 9000;
 
 //middleware
 app.use(bodyParser.json());
-app.use(cors());
+// app.use(cors());
 app.use(helmet());
 
 // db config
