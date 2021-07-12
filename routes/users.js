@@ -1,8 +1,8 @@
 import admin from "firebase-admin";
-import express from "express";
+import { Router } from "express";
 import serviceAccount from "../facebook-mern-3c59a-firebase-adminsdk-s49tf-19587a0de4.json";
 
-const router = express.Router();
+const router = Router();
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
