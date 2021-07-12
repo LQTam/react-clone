@@ -39,7 +39,7 @@ function Conversation({ conversation, setCurrentConversation }) {
   useEffect(() => {
     const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
       cluster: process.env.REACT_APP_PUSHER_CLUSTER,
-      authEndpoint: "http://localhost:9000/pusher/auth",
+      authEndpoint: `${process.env.REACT_APP_SERVER_ENDPOINT}/${process.env.REACT_APP_PUSHER_AUTH_ENDPOINT}`,
     });
     let messageChannel = pusher.subscribe("message");
     messageChannel.bind("new-message", (data) => {

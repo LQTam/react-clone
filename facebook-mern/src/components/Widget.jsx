@@ -125,7 +125,7 @@ function Widget({ currentConversation }) {
     // console.log(open);
     // const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
     //   cluster: process.env.REACT_APP_PUSHER_CLUSTER,
-    //   authEndpoint: `http://localhost:9000/${process.env.REACT_APP_PUSHER_AUTH_ENDPOINT}`,
+    // authEndpoint: `${process.env.REACT_APP_SERVER_ENDPOINT}/${process.env.REACT_APP_PUSHER_AUTH_ENDPOINT}`,
     // });
     // pusher.connection.bind("connected", () => {
     //   const channel = pusher.subscribe("conversation");

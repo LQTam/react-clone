@@ -99,7 +99,7 @@ function ChatWindow({ user, minimizeChatWindow, handleCloseChat }) {
     let channel_name = `private-messages.${currentConversation?._id}`;
     const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
       cluster: process.env.REACT_APP_PUSHER_CLUSTER,
-      authEndpoint: "http://localhost:9000/pusher/auth",
+      authEndpoint: `${process.env.REACT_APP_SERVER_ENDPOINT}/${process.env.REACT_APP_PUSHER_AUTH_ENDPOINT}`,
     });
     pusher.connection.bind("connected", async () => {
       let channel = pusher.subscribe(channel_name);

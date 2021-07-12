@@ -88,7 +88,7 @@ function Header({ setCurrentConversation }) {
     let channel_name = `notification.${uid}`;
     const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
       cluster: process.env.REACT_APP_PUSHER_CLUSTER,
-      authEndpoint: "http://localhost:9000/pusher/auth",
+      authEndpoint: `${process.env.REACT_APP_SERVER_ENDPOINT}/${process.env.REACT_APP_PUSHER_AUTH_ENDPOINT}`,
     });
     let channel = pusher.subscribe(channel_name);
     let conversationChannel = pusher.subscribe("conversations");
