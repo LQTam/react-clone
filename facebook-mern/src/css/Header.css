@@ -7,6 +7,22 @@
   z-index: 100;
   top: 0;
   box-shadow: 0px 5px 8px -9px rgba(0, 0, 0, 0.75);
+  overflow-x: scroll;
+  padding-bottom: 0;
+  height: 70px;
+}
+
+.header::-webkit-scrollbar {
+  width: 0;
+}
+.header::-webkit-scrollbar-track {
+  background: white;
+}
+.header::-webkit-scrollbar-thumb {
+  background: white;
+}
+.header::-webkit-scrollbar-thumb:hover {
+  background: white;
 }
 
 .header__left {
@@ -97,4 +113,50 @@
   top: 67px !important;
   left: auto !important;
   right: 45px !important;
+}
+
+.header__right > .notification,
+.header__right > .messenger {
+  position: relative;
+}
+.header__right > .notification .badge,
+.header__right > .messenger .badge {
+  position: absolute;
+  top: -5px;
+  right: 0;
+  font-size: 17px;
+  color: white;
+  background: red;
+  border-radius: 50%;
+  padding: 0 5px;
+}
+
+.header__right > .messenger .messenger__menu .MuiIconButton-label {
+  position: relative;
+}
+.header__right > .messenger .messenger__menu {
+  top: 51px !important;
+  left: auto !important;
+  height: calc(100vh - 60px);
+  transform: none !important;
+  right: 26px;
+  position: fixed !important;
+  top: 83px !important;
+}
+
+.header__right > .messenger .MuiList-root.MuiList-padding {
+  padding: 0;
+}
+
+.messenger > .MuiIconButton-label > .hidden {
+  display: none;
+}
+.messenger > .MuiIconButton-label > .open {
+  display: block;
+  position: fixed;
+  top: 70px;
+  background: white;
+  bottom: 0;
+  right: 26px;
+  border-radius: 0 0 8px 8px;
 }

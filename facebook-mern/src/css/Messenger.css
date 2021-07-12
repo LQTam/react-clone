@@ -1,0 +1,163 @@
+.messengerContainer {
+  padding: 15px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 10px 8px 0px rgba(197, 183, 183, 0.71);
+  -webkit-box-shadow: 0px 10px 8px 0px rgba(197, 183, 183, 0.71);
+  -moz-box-shadow: 0px 10px 8px 0px rgba(197, 183, 183, 0.71);
+  border-radius: 0 0 8px 8px;
+  height: 100%;
+  padding-right: 0;
+}
+
+.messengerContainer > .conversationList::-webkit-scrollbar {
+  width: 10px;
+}
+.messengerContainer > .conversationList::-webkit-scrollbar-track {
+  background: white;
+}
+.messengerContainer > .conversationList::-webkit-scrollbar-thumb {
+  background: white;
+}
+.messengerContainer > .conversationList::-webkit-scrollbar-thumb:hover {
+  background: white;
+}
+
+.messengerContainer > .conversationList:hover::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.messengerContainer > .conversationList:hover::-webkit-scrollbar-thumb {
+  background: #888;
+}
+.messengerContainer > .conversationList:hover::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.messenger__header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: fixed;
+  top: 80px;
+}
+.messenger__header > .headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.messenger__header > .headerTop > h2 {
+  margin: 0;
+}
+.messenger__header .MuiButtonBase-root {
+  padding: 5px;
+}
+.messenger__header > h2 {
+  margin: 0;
+  font-size: 30px;
+}
+.messenger__header > .headerRight {
+  display: flex;
+}
+
+.messenger__search {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 40px;
+  background: #eff2f5;
+  padding: 10px 15px;
+}
+.messenger__search > input {
+  outline-width: 0;
+  border: none;
+  background: #eff2f5;
+  font-size: 20px;
+}
+
+.messenger__search > input::placeholder {
+  font-size: 20px;
+}
+
+.messengerContainer > .conversationList {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  position: relative;
+  top: 112px;
+  overflow-y: scroll;
+  border-radius: 0 0 8px 8px;
+}
+
+.conversationList > .conversation {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+}
+.conversationList > .conversation:hover {
+  background: #eff2f5;
+}
+.conversationList > .conversation:hover > .moreAction {
+  display: block;
+}
+
+.conversation > .user__info {
+  margin-left: 10px;
+  text-align: left;
+  flex: 1;
+  overflow: hidden;
+}
+.conversation > .user__avatar {
+  width: 56px;
+  height: 56px;
+}
+.conversation > .user__info > h3 {
+  font-size: 18px;
+  margin: 0;
+}
+.conversation > .user__info > p {
+  font-size: 16px;
+  margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.conversationList > .conversation > .moreAction {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  background: white;
+  display: none;
+  border-radius: 50%;
+  padding: 3px 3px;
+  width: 24px;
+  height: 24px;
+}
+.conversationList > .conversation > .moreAction:hover {
+  background: #aeb1b4;
+  color: white;
+}
+.messengerContainer > .messenger__bottom {
+  position: fixed;
+  bottom: 0;
+  box-shadow: 0px 0px 8px 0px rgb(197 183 183 / 71%);
+  -webkit-box-shadow: 0px 0px 8px 0px rgb(197 183 183 / 71%);
+  -moz-box-shadow: 0px 0px 8px 0px rgba(197, 183, 183, 0.71);
+  border-radius: 0 0 8px 8px;
+  padding: 15px 0;
+  color: #2e78dd;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 2;
+  background: white;
+  border-bottom: 0;
+  font-size: 18px;
+  width: inherit;
+  right: 26px;
+}
+
+.messengerContainer > .messenger__bottom:hover {
+  text-decoration: underline;
+}

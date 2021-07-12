@@ -1,20 +1,62 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import "./App.css";
-import Feed from "./components/Feed";
 import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import Widget from "./components/Widget";
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
-import Login from "./components/Login";
-import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
+import { HOME, LOGIN, MESSENGER } from "./routes";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import axios from "./axios";
+import Pusher from "pusher-js";
+import {
+  addNewPost,
+  deletePostByGivenId,
+  setPostsData,
+} from "./features/post/postSlice";
+import { addNewConversation } from "./features/conversation/conversationSlice";
+import Messenger from "./pages/Messenger";
+import { auth } from "./firebase";
 import { setUserLogin } from "./features/user/userSlice";
-import { HOME, LOGIN } from "./routes";
-
 function App() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const [currentConversation, setCurrentConversation] = React.useState(null);
+  const syncFeed = useCallback(() => {
+    axios
+      .get("/retrieve/posts")
+      .then(({ data }) => dispatch(setPostsData(data)));
+  }, [dispatch]);
+
+  useEffect(() => {
+    const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+      cluster: process.env.REACT_APP_PUSHER_CLUSTER,
+      authEndpoint: `http://localhost:9000/${process.env.REACT_APP_PUSHER_AUTH_ENDPOINT}`,
+    });
+    const postChannel = pusher.subscribe("posts");
+    const conversationChannel = pusher.subscribe("conversations");
+
+    postChannel.bind("inserted", function (data) {
+      dispatch(addNewPost(data));
+    });
+    postChannel.bind("deleted", function (data) {
+      let { _id } = data;
+      dispatch(deletePostByGivenId({ _id }));
+    });
+    conversationChannel.bind("inserted", function (data) {
+      dispatch(addNewConversation(data));
+    });
+    return () => {
+      postChannel.unbind_all();
+      postChannel.unsubscribe();
+      conversationChannel.unbind_all();
+      conversationChannel.unsubscribe();
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    syncFeed();
+  }, [syncFeed]);
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -22,7 +64,11 @@ function App() {
         dispatch(setUserLogin({ displayName, email, photoURL, uid }));
       }
     });
-  }, [dispatch, history]);
+  }, [dispatch]);
+  function handleGetCurrentConversation(c, u) {
+    setCurrentConversation(u);
+  }
+
   return (
     <div className="app">
       <Router>
@@ -30,17 +76,14 @@ function App() {
           <Route path={LOGIN}>
             <Login />
           </Route>
-          <Route path={HOME}>
+          <Route path={MESSENGER}>
             <Header />
+            <Messenger />
+          </Route>
+          <Route path={HOME}>
+            <Header setCurrentConversation={handleGetCurrentConversation} />
             <div className="app__body">
-              {/* HEADER */}
-
-              {/* SIDEBAR */}
-              <Sidebar />
-              {/* FEED */}
-              <Feed />
-              {/* WIDGETS */}
-              <Widget />
+              <Home currentConversation={currentConversation} />
             </div>
           </Route>
         </Switch>

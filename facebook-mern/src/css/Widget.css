@@ -24,6 +24,10 @@
   border-bottom: 2px solid lightgrey;
   margin-bottom: 20px;
   max-height: 230px;
+  overflow-y: hidden;
+}
+
+.online__users:hover {
   overflow-y: scroll;
 }
 .user {
@@ -113,18 +117,18 @@
 .chat__messages {
   padding: 0 10px;
   flex: 1;
+  overflow-x: hidden;
 }
 .message__box {
   display: flex;
   margin: 30px 0;
-  justify-content: flex-end;
 }
 .message__box:hover > .message__options {
   visibility: visible;
 }
 
 .message__box.sender {
-  margin-left: auto;
+  justify-content: flex-end;
 }
 
 .message__box > .user__avatar {
@@ -143,6 +147,7 @@
   padding-left: 15px;
   margin-left: 5px;
   padding-right: 10px;
+  overflow-wrap: anywhere;
 }
 .message__box.sender > .message__options {
   direction: rtl;
