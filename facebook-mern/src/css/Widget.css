@@ -1,7 +1,12 @@
 .widgets {
-  flex: 0.33;
+  /* flex: 0.33;
   position: fixed;
-  right: 0;
+  right: 0; */
+  flex-basis: 25%;
+  position: sticky;
+  top: 70px;
+  align-self: flex-start;
+  height: 100vh;
 }
 
 .widgets ::-webkit-scrollbar {
@@ -291,4 +296,10 @@
 .minimize__chat > .user__info > p {
   margin: 0;
   margin-top: 5px;
+}
+
+@media only screen and (max-width: 820px) {
+  .widgets {
+    display: none;
+  }
 }
