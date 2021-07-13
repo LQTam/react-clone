@@ -51,7 +51,7 @@ function App() {
       conversationChannel.unbind_all();
       conversationChannel.unsubscribe();
     };
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     syncFeed();

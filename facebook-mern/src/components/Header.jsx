@@ -72,7 +72,15 @@ function Header({ setCurrentConversation }) {
   React.useEffect(() => {
     const fetchUsers = async () => {
       let { data } = await axios.get("/users");
-      const usersFilter = data.users.filter((user) => user.uid !== uid);
+      const otherUsers = data.users.filter((user) => user.uid !== uid);
+      let usersFilter = otherUsers.map(
+        ({ displayName, email, photoURL, uid }) => ({
+          displayName,
+          email,
+          photoURL,
+          uid,
+        })
+      );
       dispatch(setUsers(usersFilter));
     };
     fetchUsers();

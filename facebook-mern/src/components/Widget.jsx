@@ -121,33 +121,6 @@ function Widget({ currentConversation }) {
 
   useEffect(() => {
     if (currentConversation) addToChat(currentConversation);
-    // console.log(currentConversation);
-    // console.log(open);
-    // const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-    //   cluster: process.env.REACT_APP_PUSHER_CLUSTER,
-    // authEndpoint: `${process.env.REACT_APP_SERVER_ENDPOINT}/${process.env.REACT_APP_PUSHER_AUTH_ENDPOINT}`,
-    // });
-    // pusher.connection.bind("connected", () => {
-    //   const channel = pusher.subscribe("conversation");
-    //   console.log("connected");
-    //   channel.bind("pusher:subscription_succeeded", () => {
-    //     console.log("successed");
-    //     channel.bind("open", (data) => {
-    //       let index = users.findIndex((item) =>
-    //         data.members.includes(item.uid)
-    //       );
-    //       console.log(index);
-    //       if (index > -1) {
-    //         addToChat(users[index]);
-    //       }
-    //     });
-    //   });
-    // });
-    // return () => {
-    //   pusher.unsubscribe("conversation");
-    //   pusher.unbind("open");
-    // };
-    // }, [open]);
   }, [currentConversation]);
   return (
     <div className="widgets">
@@ -187,7 +160,7 @@ function Widget({ currentConversation }) {
           </>
         )}
       </div>
-      <iframe
+      {/* <iframe
         src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FPersonal-Learning-English-103638948572232&tabs=timeline&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&width=340&height=1500"
         width="340"
         height="800"
@@ -197,7 +170,7 @@ function Widget({ currentConversation }) {
         allowtransparency="true"
         title="Personal Learning English Page"
         allow="encrypted-media"
-      ></iframe>
+      ></iframe> */}
     </div>
   );
 }

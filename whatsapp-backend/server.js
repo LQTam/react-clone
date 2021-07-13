@@ -4,17 +4,17 @@ import Pusher from "pusher";
 import cors from "cors";
 import Messages from "./dbMessages.js";
 import Rooms from "./dbRooms.js";
-
+import "dotenv/config";
 //app config
 const app = express();
 const port = process.env.PORT || 9000;
 
 const pusher = new Pusher({
-  appId: "1225845",
-  key: "56d23b108dfd4f5ecf4c",
-  secret: "00bb236c553dc818d8f6",
-  cluster: "ap1",
-  useTLS: true,
+  appId: process.env.PUSHER_APP_ID,
+  key: process.env.PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
+  cluster: process.env.PUSHER_CLUSTER,
+  useTLS: process.env.PUSHER_USE_TLS,
 });
 
 //middleware
@@ -27,8 +27,7 @@ app.use(cors());
 // });
 
 //db config
-const connection_url =
-  "mongodb+srv://tamlq:RsmmQIj5boJQfvsh@cluster0.ff9vg.mongodb.net/whatsappdb?retryWrites=true&w=majority";
+const connection_url = process.env.MONGODB_URI || process.env.MONGODB_URI_LOCAL;
 
 mongoose.connect(connection_url, {
   useCreateIndex: true,

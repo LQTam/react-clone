@@ -98,7 +98,8 @@
   > .conversation
   > .chat__messages
   .message__options {
-  display: none;
+  display: flex;
+  visibility: hidden;
 }
 
 .messengerPage
@@ -106,7 +107,7 @@
   > .conversation
   .message__box:hover
   .message__options {
-  display: flex;
+  visibility: visible;
 }
 
 .messengerPage > .conversationContent > .conversation .message__box.sender p {
