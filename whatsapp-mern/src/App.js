@@ -5,13 +5,31 @@ import Sidebar from "./components/Sidebar";
 import Pusher from "pusher-js";
 import axios from "./axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { auth } from "./firebase";
 import Login from "./components/Login";
+import { actionTypes } from "./reducer";
 import { useStateValue } from "./StateProvider";
+require("dotenv").config();
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
   // const [messages, setMessages] = useState([]);
   const [rooms, setRooms] = useState([]);
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: authUser,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: null,
+        });
+      }
+    });
+  }, []);
   useEffect(() => {
     // axios.get("/messages/sync").then((response) => {
     //   setMessages(response.data);
@@ -23,7 +41,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    var pusher = new Pusher("56d23b108dfd4f5ecf4c", {
+    var pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
       cluster: "ap1",
     });
 

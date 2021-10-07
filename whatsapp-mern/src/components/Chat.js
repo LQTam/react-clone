@@ -29,7 +29,7 @@ function Chat() {
   }, [roomId]);
 
   useEffect(() => {
-    var pusher = new Pusher("56d23b108dfd4f5ecf4c", {
+    var pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
       cluster: "ap1",
     });
 
