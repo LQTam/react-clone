@@ -1,9 +1,9 @@
-## Prerequire
+## Install
 * [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable)
 
 ## Setup
 ```
-cd /amazone-clone
+cd /disney-plus-clone
 yarn start
 ```
 

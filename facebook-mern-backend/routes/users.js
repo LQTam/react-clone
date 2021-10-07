@@ -1,6 +1,6 @@
 import admin from "firebase-admin";
 import { Router } from "express";
-import serviceAccount from "../facebook-mern-3c59a-firebase-adminsdk-s49tf-19587a0de4.json";
+import serviceAccount from "../fb-mern-08-10-firebase-adminsdk-sy1dt-9307a43514.json";
 
 const router = Router();
 admin.initializeApp({
